@@ -25,21 +25,31 @@ namespace Homework1_1
         
         private void CreateData()
         {
+            var restaurant1 = new Class1.Exl1
+            {
+                級別 = "0",
+                級距1 = "0",
+                級距2 = "0",
+                稅率 = "0",
+                累積差額 = "0"
+            };
             foreach (var items in result)
             {
-                int max = 999999999;
                 string[] s = items.級距.Split('~');
-                int.TryParse(s[1], out max);
                 var restaurant = new Class1.Exl1
                 {
                     級別 = items.級別,
                     級距1 = s[0],
-                    級距2 = max.ToString(),
+                    級距2 = s[1],
                     稅率 = items.稅率,
-                    累積差額 = items.累積差額
+                    累積差額 = ((double.Parse(restaurant1.級距2)
+                    * ((double.Parse(items.稅率) - double.Parse(restaurant1.稅率)) / 100))
+                    + (double.Parse(restaurant1.累積差額))).ToString()
                 };
                 result1.Add(restaurant);
+                restaurant1 = restaurant;
             }
+            dataGridView1.DataSource = result1;
         }
         private void CreateDataSo()
         {
@@ -52,11 +62,11 @@ namespace Homework1_1
                     級別 = items.級別,
                     級距 = items.級距,
                     稅率 = items.稅率,
-                    累積差額 = items.累積差額
+                    累積差額 = "0"
                 };
                 result.Add(restaurant);
             }
-            dataGridView1.DataSource = result;
+            //dataGridView1.DataSource = result;
         }
         private void button1_Click(object sender, EventArgs e)
         {

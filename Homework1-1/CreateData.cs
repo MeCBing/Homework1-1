@@ -13,10 +13,28 @@ namespace Homework1_1
         {
             double money = 0;
             double.TryParse(text, out money);
-            var res = list.Where((x) => double.Parse(x.級距1) < money && money < double.Parse(x.級距2));
-            foreach (var sd in res)
+            double max = list.Max((y) => double.Parse(y.級距1));
+            var list1 = list.Where((x) => double.Parse(x.級距1) < max);
+            List<Class1.Exl1> res = new List<Class1.Exl1>();
+            if(money>max)
             {
-                S = $"現在級別 : {sd.級別} \n現金 : {money} \n稅率 : {sd.稅率} \n需繳納稅金為 {(money * (double.Parse(sd.稅率) / 100.00) - double.Parse(sd.累積差額)).ToString("C")}";
+                var res1 = list.Where((x) => double.Parse(x.級距1) == max);
+                foreach (var index in res1)
+                {
+                    res.Add(index);
+                }
+            }
+            else
+            {
+                var res1 = list1.Where((x) => double.Parse(x.級距1) <= money && money <= double.Parse(x.級距2));
+                foreach(var index in res1)
+                {
+                    res.Add(index);
+                }
+            }
+            foreach(var index in res)
+            {
+                S = $"現在級別 : {index.級別} \n現金 : {money} \n稅率 : {index.稅率} \n需繳納稅金為 {(money * (double.Parse(index.稅率) / 100.00) - double.Parse(index.累積差額)).ToString("C")}";
             }
         }
     }
